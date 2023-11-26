@@ -1,0 +1,11 @@
+Model Information:
+* title:	MBTI 16personalities avatars
+* source:	https://sketchfab.com/3d-models/mbti-16personalities-avatars-263adffb5b8e46d8a134a454812afc19
+* author:	Taniachi Fractal (https://sketchfab.com/Taniachi_Fractal)
+
+Model License:
+* license type:	CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)
+* requirements:	Author must be credited. No commercial use. Modified versions must have the same license.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "MBTI 16personalities avatars" (https://sketchfab.com/3d-models/mbti-16personalities-avatars-263adffb5b8e46d8a134a454812afc19) by Taniachi Fractal (https://sketchfab.com/Taniachi_Fractal) licensed under CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)
