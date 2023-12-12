@@ -11,24 +11,19 @@ document.body.appendChild(renderer.domElement);
 
 camera.position.x = 0;
 camera.position.y = 0;
-camera.position.z = 200;
+camera.position.z = 18;
 
 // 添加方向光
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5); // color, intensity
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // color, intensity
 directionalLight.position.set(1, 1, 1); // 设置光源位置
 scene.add(directionalLight);
 
 const loader = new GLTFLoader();
 
-loader.setPath('../mbti figures/'); // 设置路径
-
 loader.load('../mbti figures/scene.gltf', function (gltf2){
     const model2 = gltf2.scene;
-    model2.traverse((child) => {
-        if (child.isMesh) {
-            // 这里可以设置一些材质或其他属性
-        }
-    });
+    const scaleValue = 0.2;
+    model2.scale.set(scaleValue, scaleValue, scaleValue);
     scene.add(model2);
 },
 (xhr) => {

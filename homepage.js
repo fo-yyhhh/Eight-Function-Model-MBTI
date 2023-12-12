@@ -58,20 +58,21 @@ loader.load('../earth/scene.gltf', function (gltf1){
 }
 );
 
-/*
+
 loader.load('../mbti figures/scene.gltf', function (gltf2){
-        const model2 = gltf2.scene;
-        model2.position.set(0, 0, -200);
-        scene.add(model2);
-    },
-    (xhr) => {
-        console.log((xhr.loaded / xhr.total * 100) + '% loaded 2');
-    },
-    (error) => {
-        console.error(error);
-    }
-);
-*/
+    const model2 = gltf2.scene;
+    model2.position.set(20, 0, 0);
+    const scaleValue = 0.2;
+    model2.scale.set(scaleValue, scaleValue, scaleValue);
+    scene.add(model2);
+},
+(xhr) => {
+    console.log((xhr.loaded / xhr.total * 100) + '% loaded 2');
+},
+(error) => {
+    console.error(error);
+});
+
 
 
 function animate() {
