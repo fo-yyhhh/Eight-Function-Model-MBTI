@@ -45,21 +45,10 @@ controls.screenSpacePanning = false;
 
 
 const loader = new GLTFLoader();
-/*
-loader.load('../mbti figures/scene.gltf', function (gltf){
-        scene.add(gltf.scene);
-    },
-    (xhr) => {
-        console.log((xhr.loaded / xhr.total * 100) + '% 已加载');
-    },
-    (error) => {
-        console.error(error);
-    }
-);
-*/
 
-loader.load('../earth/scene.gltf', function (gltf){
-    scene.add(gltf.scene);
+loader.load('../earth/scene.gltf', function (gltf1){
+    const model1 = gltf1.scene;
+    scene.add(model1);
 },
 (xhr) => {
     console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -69,7 +58,20 @@ loader.load('../earth/scene.gltf', function (gltf){
 }
 );
 
-
+/*
+loader.load('../mbti figures/scene.gltf', function (gltf2){
+        const model2 = gltf2.scene;
+        model2.position.set(0, 0, -200);
+        scene.add(model2);
+    },
+    (xhr) => {
+        console.log((xhr.loaded / xhr.total * 100) + '% loaded 2');
+    },
+    (error) => {
+        console.error(error);
+    }
+);
+*/
 
 
 function animate() {
