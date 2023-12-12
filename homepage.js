@@ -29,9 +29,10 @@ const directionalLight2 = new THREE.DirectionalLight(0xffffff, 4);
 directionalLight2.position.set(-1, -1, -1); 
 scene.add(directionalLight2);
 
-const pointLight = new THREE.PointLight(0xffffff, 3, 20); //strength & distance
-pointLight.position.set(0, 0, 5);
-scene.add(pointLight);
+const pointLight1 = new THREE.PointLight(0xffffff, 5, 20); //strength & distance
+pointLight1.position.set(0, 0, 5);
+scene.add(pointLight1);
+
 
 
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -47,8 +48,8 @@ controls.screenSpacePanning = false;
 const loader = new GLTFLoader();
 
 loader.load('../earth/scene.gltf', function (gltf1){
-    const model1 = gltf1.scene;
-    scene.add(model1);
+    const earth = gltf1.scene;
+    scene.add(earth);
 },
 (xhr) => {
     console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -60,11 +61,11 @@ loader.load('../earth/scene.gltf', function (gltf1){
 
 
 loader.load('../mbti figures/scene.gltf', function (gltf2){
-    const model2 = gltf2.scene;
-    model2.position.set(20, 0, 0);
-    const scaleValue = 0.2;
-    model2.scale.set(scaleValue, scaleValue, scaleValue);
-    scene.add(model2);
+    const mbtiFigures = gltf2.scene;
+    mbtiFigures.position.set(20, 0, 0);
+    const scaleValue = 0.22;
+    mbtiFigures.scale.set(scaleValue, scaleValue, scaleValue);
+    scene.add(mbtiFigures);
 },
 (xhr) => {
     console.log((xhr.loaded / xhr.total * 100) + '% loaded 2');
