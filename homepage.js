@@ -163,7 +163,7 @@ function onMouseClick(event) {
 
                 
                 //link to personality detailed pages
-                const urlMapping = {
+            /*    const urlMapping = {
                     "ISFP": "detailed character page.html?",
                     "ISTP",
                     "ESFP",
@@ -190,7 +190,7 @@ function onMouseClick(event) {
                 } else {
                     console.log("URL not defined for the alt text:", altText);
                 }
-    
+    */
                 console.log('Clicked on an interactive object!');
             }
         });
