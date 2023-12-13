@@ -149,16 +149,49 @@ function onMouseClick(event) {
             if (intersect.object.userData.interactive) {
                 //console.log(clickPoint);
                 const imagePaths = intersect.object.userData.imagePaths;
-                // get image path
+                // get image(& altText) path
                 const index = icosahedrons.indexOf(intersect.object);
                 const image = imagePaths[index % 4];
 
                 const altTextPath = intersect.object.userData.altText;
                 const altText = altTextPath[index % 4];
-                console.log(altText);
-                // find image according to the path
+                console.log(altText);//print to check if personality type is correct
+                // find image & altText according to the path
+                
                 showImageAtPosition(clickPoint, image,altText);
                 //console.log('Clicked on an interactive object!');
+
+                
+                //link to personality detailed pages
+                const urlMapping = {
+                    "ISFP": "detailed character page.html?",
+                    "ISTP",
+                    "ESFP",
+                    "ESTP",
+                    "INFP",
+                    "INFJ",
+                    "ENFP",
+                    "ENFJ",
+                    "ISFJ",
+                    "ISTJ",
+                    "ESFJ",
+                    "ESTJ",
+                    "INTP",
+                    "INTJ",
+                    "ENTP",
+                    "ENTJ"
+                    // ... and so on for other alt texts
+                };
+
+                const url = urlMapping[altText];
+                if (url) {
+                    // go to the personality webpage
+                    window.location.href = url;
+                } else {
+                    console.log("URL not defined for the alt text:", altText);
+                }
+    
+                console.log('Clicked on an interactive object!');
             }
         });
     } else {

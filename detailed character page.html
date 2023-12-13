@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="UTF-8">
+
+  <head>
+    <link rel="stylesheet" type="text/css" href="homepage.css">
+    <title>Detailed Character Page</title>
+    <script defer src="detailed.js"></script>
+    <script defer src="personality.js"></script>
+  </head>
+  
+	<body>
+		<div class = "tab">
+			<img src="./environment/ISFP.svg" alt="ISFP environment picture" width="100%"> 
+
+
+
+			<div class = "tabRight">
+				<div class = "linktoPage">
+					<a href="../solution-hw6/Product Gallery.html">
+						<p id="productinGallery">PRODUCTS</p>
+					</a>
+
+					<a href="../solution-hw6/Shopping Cart.html">
+						<p id="cartinGallery">CART</p>
+					</a>
+				</div>
+
+					
+      </div>
+        <div>
+            <img src="./function pic/ISFP.png" alt="ISFP function" width="70%"> 
+        </div>
+
+        <div>
+            <h1 id="mbti">ISFP</h1>
+            <h2 id="character">Composer</h2>
+        </div>
+        
+
+
+    <div class ="productDetailSection">
+      <div class="productDetailPicture">
+        <img src="" class="image" id="rollPicture" width="600px">
+      </div>
+
+      <div class="productDetailLetter">
+        <p>Customize our delicious, hand-made cinammon roll to your liking!</p>
+
+        <br>
+
+        <form action="../solution-hw6/Shopping Cart.html">
+          <p>Glazing:</p>
+          <select class = "button" id="glazingOptions" onchange="glazingChange(this)">
+          </select>
+          
+          <p>Pack size:</p>
+          <select class = "button" id="packSizeOptions" onchange="packChange(this)">
+          </select>
+          
+        <br> 
+        <br> 
+        <br> 
+        
+          <p class="AddtoCart">
+            <span id="totalPrice"></span>
+            <input class="submit" type="button" value="Add to Cart" onclick="addtoCart()">
+          </p>
+        </form>
+      </div>
+    </div>
+
+  </body>
+</html>
