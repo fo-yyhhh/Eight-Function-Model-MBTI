@@ -138,6 +138,7 @@ window.addEventListener('click', onMouseClick, false);
 
 
 let isImageVisible = false;
+let mbtiType;
 const iconElement = document.createElement('img');
 
 
@@ -206,6 +207,7 @@ function onMouseClick(event) {
     */
                 console.log('Clicked on an interactive object!');
                 isImageVisible = true;
+                mbtiType=altText;
             }
         });
     } else {
@@ -258,7 +260,7 @@ function showIndicatorIcon() {
 window.addEventListener('keydown', (event) => {
     if (event.key === 's' && isImageVisible) {
         // Navigate to the detailed page
-        window.location.href = 'detailed character page.html';
+        window.location.href = `detailed character page.html?mbti=${mbtiType}`;
     }
 });
 
