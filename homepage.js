@@ -59,7 +59,7 @@ controls.screenSpacePanning = false;
 //load earth model
 let earthModel;
 const loader = new GLTFLoader();
-loader.load("../earth/scene.gltf", function (gltf1){
+loader.load("./earth/scene.gltf", function (gltf1){
     const earth = gltf1.scene;
     scene.add(earth);
     earthModel = earth;
