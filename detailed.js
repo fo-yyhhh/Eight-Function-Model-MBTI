@@ -10,7 +10,7 @@ const mbtiType = params.get('mbti');
     
 // Get the content for the specific MBTI type from the imported module
 const content = mbtiContent[mbtiType];
-console.log(content);
+
     
     
 if (content) {
