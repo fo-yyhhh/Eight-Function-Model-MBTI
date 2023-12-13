@@ -53,7 +53,6 @@ loader.load('../earth/scene.gltf', function (gltf1){
     const earth = gltf1.scene;
     scene.add(earth);
     earthModel = earth;
-    
 },
 (xhr) => {
     console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -72,7 +71,9 @@ const materials = [];
 const icosahedrons = [];
 const sphereRadius = 9.5; // 16IcosahedronGeometry equal distance to sphere center
 
-const colors = [0xFFFF00, 0x00FF00, 0x0000FF, 0x800080]; // yellow, green, blue, purple
+
+
+const colors = [0xFFFF00, 0x00FF00, 0x0000FF, 0x800080]; // yellow, green, blue, purple (IcosahedronGeometry color corresponding to mbti figure color)
 const colorImagePaths = [
     [`../mbti pic/yellow1.png`, `../mbti pic/yellow2.png`, `../mbti pic/yellow3.png`, `../mbti pic/yellow4.png`],
     [`../mbti pic/green1.png`, `../mbti pic/green2.png`, `../mbti pic/green3.png`, `../mbti pic/green4.png`],
@@ -80,9 +81,16 @@ const colorImagePaths = [
     [`../mbti pic/purple1.png`, `../mbti pic/purple2.png`, `../mbti pic/purple3.png`, `../mbti pic/purple4.png`]
 ];
 
+const altTexts = [
+    ["ISFP","ISTP","ESFP","ESTP"],
+    ["INFP","INFJ","ENFP","ENFJ"],
+    ["ISFJ","ISTJ","ESFJ","ESTJ"],
+    ["INTP","INTJ","ENTP","ENTJ"]
+];
 
 
-// loop through to make 16IcosahedronGeometry
+
+// loop through to create 16 IcosahedronGeometry
 for (let i = 0; i < 16; i++) {
     const phi = Math.acos(-1 + (2 * i) / 16); // longitude
     const theta = Math.sqrt(16 * Math.PI) * phi; // latitude
@@ -103,14 +111,16 @@ for (let i = 0; i < 16; i++) {
 
     // Set image paths based on color
     icosahedron.userData.imagePaths = colorImagePaths[Math.floor(i / 4)];
+    icosahedron.userData.altText = altTexts[Math.floor(i / 4)];
     scene.add(icosahedron);
     icosahedrons.push(icosahedron);
 }
 
+
 const imageElement = document.createElement('img');
 imageElement.style.position = 'absolute';
-imageElement.style.width = '100px'; // pic width
-imageElement.style.height = '100px'; // pic height
+imageElement.style.width = '150px'; // pic width
+imageElement.style.height = '150px'; // pic height
 document.body.appendChild(imageElement);
 
 // mouseclick to listen event
@@ -119,15 +129,17 @@ window.addEventListener('click', onMouseClick, false);
 
 
 function onMouseClick(event) {
-    // mouseclick--->
+    // mouseclick--->; get mouseclick position
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
 
+    //check object and mouse intersection
     raycaster.setFromCamera(mouse, camera);
 
     const intersects = raycaster.intersectObjects(scene.children, true);
+
 
     if (intersects.length > 0) {
         // get clicked position
@@ -135,15 +147,18 @@ function onMouseClick(event) {
 
         intersects.forEach((intersect) => {
             if (intersect.object.userData.interactive) {
-                console.log(clickPoint);
+                //console.log(clickPoint);
                 const imagePaths = intersect.object.userData.imagePaths;
                 // get image path
                 const index = icosahedrons.indexOf(intersect.object);
                 const image = imagePaths[index % 4];
+
+                const altTextPath = intersect.object.userData.altText;
+                const altText = altTextPath[index % 4];
+                console.log(altText);
                 // find image according to the path
-                console.log(index);
-                showImageAtPosition(clickPoint, image);
-                console.log('Clicked on an interactive object!');
+                showImageAtPosition(clickPoint, image,altText);
+                //console.log('Clicked on an interactive object!');
             }
         });
     } else {
@@ -153,9 +168,10 @@ function onMouseClick(event) {
 }
 
 
-function showImageAtPosition(position, imageUrl) {
+function showImageAtPosition(position, imageUrl,altText) {
     const { x, y } = get2DPosition(position, camera, renderer);
     imageElement.src = imageUrl;
+    imageElement.alt = altText;
     imageElement.style.left = `${x}px`;
     imageElement.style.top = `${y}px`;
     imageElement.style.display = 'block';
@@ -171,7 +187,7 @@ function get2DPosition(point, camera, renderer) {
 }
 
 
-
+//mousedown picture disappear
 window.addEventListener('mousedown', onMouseDown, false);
 
 function onMouseDown() {
@@ -179,14 +195,17 @@ function onMouseDown() {
 }
 
 
-// auto-rotation
+
+
+
 function animate() {
     requestAnimationFrame(animate);
 
+    // whole scene auto-rotation
+    scene.rotation.x += 0.0003;
+    scene.rotation.y += 0.0003;
 
-    scene.rotation.x += 0.0001;
-    scene.rotation.y += 0.0001;
-
+        // individual icosahedrons also auto-rotate
         icosahedrons.forEach((icosahedron) => {
         if (icosahedron.userData.interactive) {
             icosahedron.rotation.y += 0.01; 
