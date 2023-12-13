@@ -172,14 +172,20 @@ function get2DPosition(point, camera, renderer) {
 
 
 
+window.addEventListener('mousedown', onMouseDown, false);
+
+function onMouseDown() {
+    imageElement.style.display = 'none';
+}
+
 
 // auto-rotation
 function animate() {
     requestAnimationFrame(animate);
 
 
-    scene.rotation.x += 0.00008;
-    scene.rotation.y += 0.00008;
+    scene.rotation.x += 0.0001;
+    scene.rotation.y += 0.0001;
 
         icosahedrons.forEach((icosahedron) => {
         if (icosahedron.userData.interactive) {
@@ -192,3 +198,4 @@ function animate() {
 }
 
 animate()
+
