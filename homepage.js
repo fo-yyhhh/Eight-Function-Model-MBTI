@@ -59,7 +59,7 @@ controls.screenSpacePanning = false;
 //load earth model
 let earthModel;
 const loader = new GLTFLoader();
-loader.load('./earth/scene.gltf', function (gltf1){
+loader.load("../earth/scene.gltf", function (gltf1){
     const earth = gltf1.scene;
     scene.add(earth);
     earthModel = earth;
@@ -85,10 +85,10 @@ const sphereRadius = 9.5; // 16IcosahedronGeometry equal distance to sphere cent
 
 const colors = [0xFFFF00, 0x00FF00, 0x0000FF, 0x800080]; // yellow, green, blue, purple (IcosahedronGeometry color corresponding to mbti figure color)
 const colorImagePaths = [
-    [`../mbti pic/yellow1.png`, `../mbti pic/yellow2.png`, `../mbti pic/yellow3.png`, `../mbti pic/yellow4.png`],
-    [`../mbti pic/green1.png`, `../mbti pic/green2.png`, `../mbti pic/green3.png`, `../mbti pic/green4.png`],
-    [`../mbti pic/blue1.png`, `../mbti pic/blue2.png`, `../mbti pic/blue3.png`, `../mbti pic/blue4.png`],
-    [`../mbti pic/purple1.png`, `../mbti pic/purple2.png`, `../mbti pic/purple3.png`, `../mbti pic/purple4.png`]
+    ["../mbti pic/yellow1.png", "../mbti pic/yellow2.png", "../mbti pic/yellow3.png", "../mbti pic/yellow4.png"],
+    ["../mbti pic/green1.png", "../mbti pic/green2.png", "../mbti pic/green3.png", "../mbti pic/green4.png"],
+    ["../mbti pic/blue1.png", "../mbti pic/blue2.png", "../mbti pic/blue3.png", "../mbti pic/blue4.png"],
+    ["../mbti pic/purple1.png", "../mbti pic/purple2.png", "../mbti pic/purple3.png", "../mbti pic/purple4.png"]
 ];
 
 const altTexts = [
