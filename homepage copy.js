@@ -3,7 +3,6 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'https://unpkg.com/three@latest/examples/jsm/controls/OrbitControls.js';
 
 
-
 //set scene and camera
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
@@ -45,15 +44,11 @@ controls.enableDamping = true; // an animation loop is required when either damp
 controls.dampingFactor = 0.25;
 controls.screenSpacePanning = false;
 
-
 //load earth model
-let earthModel;
 const loader = new GLTFLoader();
 loader.load('../earth/scene.gltf', function (gltf1){
     const earth = gltf1.scene;
     scene.add(earth);
-    earthModel = earth;
-    
 },
 (xhr) => {
     console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -72,17 +67,17 @@ const materials = [];
 const icosahedrons = [];
 const sphereRadius = 9.5; // 16IcosahedronGeometry equal distance to sphere center
 
-const colors = [0xFFFF00, 0x00FF00, 0x0000FF, 0x800080]; // yellow, green, blue, purple
+
+const colors = [0xFFFF00, 0x00FF00, 0x0000FF, 0x800080]; //yellow, green, blue, purple
 const colorImagePaths = [
-    [`../mbti pic/yellow1.png`, `../mbti pic/yellow2.png`, `../mbti pic/yellow3.png`, `../mbti pic/yellow4.png`],
-    [`../mbti pic/green1.png`, `../mbti pic/green2.png`, `../mbti pic/green3.png`, `../mbti pic/green4.png`],
-    [`../mbti pic/blue1.png`, `../mbti pic/blue2.png`, `../mbti pic/blue3.png`, `../mbti pic/blue4.png`],
-    [`../mbti pic/purple1.png`, `../mbti pic/purple2.png`, `../mbti pic/purple3.png`, `../mbti pic/purple4.png`]
+    [`../mbti pic/yellow1.png`,`../mbti pic/yellow2.png`, `../mbti pic/yellow3.png`,`../mbti pic/yellow4.png`],
+    [`../mbti pic/green1.png`,`../mbti pic/green2.png`,`../mbti pic/green3.png`,`../mbti pic/green4.png`],
+    [`../mbti pic/blue1.png`,`../mbti pic/blue2.png`,`../mbti pic/blue3.png`,`../mbti pic/blue4.png`],
+    [`../mbti pic/purple1.png`,`../mbti pic/purple2.png`,`../mbti pic/purple3.png`,`../mbti pic/purple4.png`]
 ];
 
 
-
-// loop through to make 16IcosahedronGeometry
+//loop through to make 16IcosahedronGeometry
 for (let i = 0; i < 16; i++) {
     const phi = Math.acos(-1 + (2 * i) / 16); // longitude
     const theta = Math.sqrt(16 * Math.PI) * phi; // latitude
@@ -97,17 +92,26 @@ for (let i = 0; i < 16; i++) {
     geometries.push(geometry);
     materials.push(material);
 
+    
+
+    
     const icosahedron = new THREE.Mesh(geometry, material);
     icosahedron.position.set(x, y, z);
     icosahedron.userData.interactive = true;
 
-    // Set image paths based on color
-    icosahedron.userData.imagePaths = colorImagePaths[Math.floor(i / 4)];
+    icosahedron.userData.imagePaths = colorImagePaths[Math.floor(i / 4)][i % 4];
+    icosahedron.userData.index = i;
     scene.add(icosahedron);
     icosahedrons.push(icosahedron);
 }
 
-const imageElement = document.createElement('img');
+
+
+
+
+
+
+const imageElement = document.createElement('img'); 
 imageElement.style.position = 'absolute';
 imageElement.style.width = '100px'; // pic width
 imageElement.style.height = '100px'; // pic height
@@ -119,6 +123,8 @@ window.addEventListener('click', onMouseClick, false);
 
 
 function onMouseClick(event) {
+    
+    
     // mouseclick--->
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
@@ -126,22 +132,28 @@ function onMouseClick(event) {
     mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
 
     raycaster.setFromCamera(mouse, camera);
+    console.log(raycaster)
 
+    console.log(scene.children);
     const intersects = raycaster.intersectObjects(scene.children, true);
+    console.log(intersects)
+    console.log(raycaster.ray.direction);
 
-    if (intersects.length > 0) {
+
+
+    if (intersects.length == 0) {
         // get clicked position
         const clickPoint = intersects[0].point;
-
-        intersects.forEach((intersect) => {
+        intersects.forEach((intersect,i) => {
             if (intersect.object.userData.interactive) {
                 console.log(clickPoint);
                 const imagePaths = intersect.object.userData.imagePaths;
+                console.log(imagePaths)
                 // get image path
-                const index = icosahedrons.indexOf(intersect.object);
-                const image = imagePaths[index % 4];
+                const image = imagePaths[i % 4]; // i 为 0 到 3，对应数组中的 4 个路径
                 // find image according to the path
-                console.log(index);
+                console.log(i)
+                console.log(image)
                 showImageAtPosition(clickPoint, image);
                 console.log('Clicked on an interactive object!');
             }
@@ -152,43 +164,36 @@ function onMouseClick(event) {
     }
 }
 
-
 function showImageAtPosition(position, imageUrl) {
-    const { x, y } = get2DPosition(position, camera, renderer);
-    imageElement.src = imageUrl;
-    imageElement.style.left = `${x}px`;
-    imageElement.style.top = `${y}px`;
-    imageElement.style.display = 'block';
+  const { x, y } = get2DPosition(position, camera, renderer);
+  imageElement.src = imageUrl;
+  imageElement.style.left = `${x}px`;
+  imageElement.style.top = `${y}px`;
+  imageElement.style.display = 'block';
 }
 
 
-// 3d to 2d position since pictures are 2d
-function get2DPosition(point, camera, renderer) {
+// 函数用于将 3D 坐标转换为屏幕上的 2D 坐标
+function get2DPosition(point, camera,renderer) {
     const vector = point.clone().project(camera);
     const x = ((vector.x + 1) / 2) * window.innerWidth;
     const y = ((-vector.y + 1) / 2) * window.innerHeight;
     return { x, y };
 }
 
+// ...
 
 
 
-// auto-rotation
+
 function animate() {
-    requestAnimationFrame(animate);
 
-    
-
-    scene.rotation.x += 0.00008;
-    scene.rotation.y += 0.00008;
-    
-    if (earthModel) {
-        earthModel.rotation.y += 0.0001;
-        earthModel.rotation.x += 0.0001;
-    }
-
+	requestAnimationFrame( animate );
+    //infpBall.rotation.y += 0.01;
     controls.update();
-    renderer.render(scene, camera);
+
+	renderer.render( scene, camera );
+
 }
 
 animate()
