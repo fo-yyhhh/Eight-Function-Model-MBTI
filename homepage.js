@@ -17,6 +17,16 @@ camera.position.y = 0;
 camera.position.z = 18;
 
 
+//resize the screen proportionally once the screen size is changed
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+window.addEventListener('resize', onWindowResize, false);
+
+
 
 //set light
 const SceneLight = new THREE.AmbientLight(0xffffff, 1); // light & strength
@@ -127,6 +137,9 @@ document.body.appendChild(imageElement);
 window.addEventListener('click', onMouseClick, false);
 
 
+let isImageVisible = false;
+const iconElement = document.createElement('img');
+
 
 function onMouseClick(event) {
     // mouseclick--->; get mouseclick position
@@ -161,25 +174,25 @@ function onMouseClick(event) {
                 showImageAtPosition(clickPoint, image,altText);
                 //console.log('Clicked on an interactive object!');
 
-                
+                /*
                 //link to personality detailed pages
-            /*    const urlMapping = {
-                    "ISFP": "detailed character page.html?",
-                    "ISTP",
-                    "ESFP",
-                    "ESTP",
-                    "INFP",
-                    "INFJ",
-                    "ENFP",
-                    "ENFJ",
-                    "ISFJ",
-                    "ISTJ",
-                    "ESFJ",
-                    "ESTJ",
-                    "INTP",
-                    "INTJ",
-                    "ENTP",
-                    "ENTJ"
+                const urlMapping = {
+                    "ISFP": "detailed character page.html",
+                    "ISTP": "detailed character page.html",
+                    "ESFP": "detailed character page.html",
+                    "ESTP": "detailed character page.html",
+                    "INFP": "detailed character page.html",
+                    "INFJ": "detailed character page.html",
+                    "ENFP": "detailed character page.html",
+                    "ENFJ": "detailed character page.html",
+                    "ISFJ": "detailed character page.html",
+                    "ISTJ": "detailed character page.html",
+                    "ESFJ": "detailed character page.html",
+                    "ESTJ": "detailed character page.html",
+                    "INTP": "detailed character page.html",
+                    "INTJ": "detailed character page.html",
+                    "ENTP": "detailed character page.html",
+                    "ENTJ": "detailed character page.html"
                     // ... and so on for other alt texts
                 };
 
@@ -192,11 +205,15 @@ function onMouseClick(event) {
                 }
     */
                 console.log('Clicked on an interactive object!');
+                isImageVisible = true;
             }
         });
     } else {
         // if not interactive object, hide picture
         imageElement.style.display = 'none';
+        iconElement.style.display = 'none'
+    
+        isImageVisible = false;
     }
 }
 
@@ -208,6 +225,9 @@ function showImageAtPosition(position, imageUrl,altText) {
     imageElement.style.left = `${x}px`;
     imageElement.style.top = `${y}px`;
     imageElement.style.display = 'block';
+
+    // Show the indicator icon
+    showIndicatorIcon();
 }
 
 
@@ -219,14 +239,45 @@ function get2DPosition(point, camera, renderer) {
     return { x, y };
 }
 
+function showIndicatorIcon() {
+    const iconSize = 0.1 * window.innerWidth;
 
-//mousedown picture disappear
-window.addEventListener('mousedown', onMouseDown, false);
+    iconElement.src = './earth/explore.png'; // Set the path to your icon image
+    iconElement.style.width = `${iconSize}px`;
+    iconElement.style.height = `${iconSize}px`;
+    iconElement.style.position = 'absolute';
+    iconElement.style.left = "85%";
+    iconElement.style.top = `45%`;
+    iconElement.style.display = 'block';
+    iconElement.id = 'indicator-icon';
 
-function onMouseDown() {
-    imageElement.style.display = 'none';
+    document.body.appendChild(iconElement);
 }
 
+// Add event listener for keyboard 's' key
+window.addEventListener('keydown', (event) => {
+    if (event.key === 's' && isImageVisible) {
+        // Navigate to the detailed page
+        window.location.href = 'detailed character page.html';
+    }
+});
+
+
+
+window.addEventListener('mousedown', onMouseDown, false);
+//mousedown picture & icon disappear
+function onMouseDown() {
+    imageElement.style.display = 'none';
+    iconElement.style.display = 'none';
+
+    isImageVisible = false;
+}
+
+
+window.addEventListener('resize', function() {
+    // Update elements or perform actions on window resize
+    // You might want to debounce this event to avoid excessive calls
+});
 
 
 

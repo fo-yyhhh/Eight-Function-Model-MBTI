@@ -5,10 +5,11 @@
   <head>
     <link rel="stylesheet" type="text/css" href="homepage.css">
     <title>Detailed Character Page</title>
-    <script defer src="detailed.js"></script>
-    <script defer src="personality.js"></script>
+    <script type="module" defer src="detailed.js"></script>
+    <script type="module" defer src="personality.js"></script>
+    
   </head>
-  
+
 	<body>
 		<div class = "tab">
 			<img id="environment" src="./environment/ISFP.svg" alt="ISFP environment picture" width="100%"> 
@@ -18,9 +19,20 @@
 			</a>	
         </div>
 
-        
-        <div id="function">
+
+        <div id="functionModel">
             <img src="./function pic/ISFP.png" alt="ISFP function" width="100%"> 
+            <div id="description-overlay" class="hidden">
+                <p>
+                    Dominant Function: Introverted Feeling (Fi)      
+
+                    Auxiliary Function: Extraverted Sensing (Se)      
+                    
+                    Tertiary Function: Introverted Intuition (Ni)      
+                    
+                    Inferior Function: Extraverted Thinking (Te)
+                </p>
+            </div>
         </div>
 
         <div>
@@ -29,18 +41,10 @@
         </div>
         
 
-
-    <div class ="productDetailSection">
-        <div class="productDetailPicture">
-            <img src="" class="image" id="rollPicture" width="600px">
-        </div>
-
         <div class="introduction">
             An Adventurer (ISFP) is a person with the Introverted, Observant, Feeling, and Prospecting personality traits. They tend to have open minds, approaching life, new experiences, and people with grounded warmth. Their ability to stay in the moment helps them uncover exciting potentials.
         </div>
-        <br>
 
-    </div>
 
-  </body>
+    </body>
 </html>
