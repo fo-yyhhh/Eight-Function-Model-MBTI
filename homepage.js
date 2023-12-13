@@ -177,15 +177,15 @@ function get2DPosition(point, camera, renderer) {
 function animate() {
     requestAnimationFrame(animate);
 
-    
 
     scene.rotation.x += 0.00008;
     scene.rotation.y += 0.00008;
-    
-    if (earthModel) {
-        earthModel.rotation.y += 0.0001;
-        earthModel.rotation.x += 0.0001;
-    }
+
+        icosahedrons.forEach((icosahedron) => {
+        if (icosahedron.userData.interactive) {
+            icosahedron.rotation.y += 0.01; 
+        }
+    });
 
     controls.update();
     renderer.render(scene, camera);
