@@ -128,6 +128,7 @@ for (let i = 0; i < 16; i++) {
 
 
 const imageElement = document.createElement('img');
+imageElement.alt = 'personality character';
 imageElement.style.position = 'absolute';
 imageElement.style.width = '150px'; // pic width
 imageElement.style.height = '150px'; // pic height
@@ -140,6 +141,7 @@ window.addEventListener('click', onMouseClick, false);
 let isImageVisible = false;
 let mbtiType;
 const iconElement = document.createElement('img');
+iconElement.alt = 'explore the personality';
 
 
 function onMouseClick(event) {
@@ -245,7 +247,6 @@ function showIndicatorIcon() {
     const iconSize = 0.1 * window.innerWidth;
 
     iconElement.src = './earth/explore.png'; // Set the path to your icon image
-    iconElement.alt = 'explore the personality';
     iconElement.style.width = `${iconSize}px`;
     iconElement.style.height = `${iconSize}px`;
     iconElement.style.position = 'absolute';
