@@ -1,4 +1,3 @@
-
 const mbtiContent = {
     'ISFP': {
         environmentImage: './environment/ISFP.svg',

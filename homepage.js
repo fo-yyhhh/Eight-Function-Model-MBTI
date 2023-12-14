@@ -245,6 +245,7 @@ function showIndicatorIcon() {
     const iconSize = 0.1 * window.innerWidth;
 
     iconElement.src = './earth/explore.png'; // Set the path to your icon image
+    iconElement.alt = 'explore the personality';
     iconElement.style.width = `${iconSize}px`;
     iconElement.style.height = `${iconSize}px`;
     iconElement.style.position = 'absolute';
